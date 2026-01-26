@@ -1,0 +1,107 @@
+body {
+    text-align: center;
+    font-family: "Happy Monkey";
+    background:linear-gradient(rgb(83, 83, 175),pink);
+    color: white;
+
+
+
+
+}
+
+#img {
+    border-radius: 100%;
+    border: 5px solid rgb(201, 28, 57);
+}
+
+h1,h2,h3,h4,h5,p {
+    text-shadow: 0px 0px 5px rgb(7, 7, 7);
+}
+
+#age {
+    background-color: rgb(168, 27, 27);
+    padding: 2px 4px 2px 4px;
+    margin: 30px 0px 5px 0px;
+}
+
+#currentdate {
+    background-color: rgb(168, 27, 27);
+    padding: 2px 4px 2px 4px;
+    margin: 0px;
+
+
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+
+.gift-section {
+    margin: 100px 0px 0px 0px;
+}
+
+.gift-st {
+    margin-top: 60px;
+    margin-bottom: 0px;
+}
+
+.gift-hint {
+    margin-top: 2%;
+    margin-bottom: 50px;
+    ;
+}
+
+.gift-cover {
+
+    background-image: url(images/shamblen-studios-M-dLdqCVfAY-unsplash.jpg);
+    background-size: cover;
+    height: 400px;
+    width: 400px;
+    border: 6px solid white;
+    border-radius: 10px;
+    margin: 0px auto;
+}
+
+#howp:hover {
+    background-image: url(images/dancing-13955_512.gif);
+
+
+}
+
+.gift-st1 {
+    margin: 50px auto;
+}
+
+#corner:hover {
+    background-image: url(images/f1-16595_512.gif);
+}
+
+#position:hover {
+    background-image: url(images/one-16678.gif);
+}
+
+#love {
+    height: 200px;
+}
+
+#love:hover {
+    background-image: url(images/flame-21186.gif);
+
+
+}
+
+#footer{
+    font:italic;
+    width:700px;
+
+    background-color: rgb(223, 0, 0);
+    margin-top: 20px;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
