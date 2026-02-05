@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <div class="numbers-display">
+                <span id="firstnum">0</span>
+                <span id="operation"></span>
+                <span id="secondnum"></span>
+            </div>
+            <div class="result-display">
+                <span id="Ans">0</span>
+            </div>
+        </div>
+        <div class="buttons-grid">
+            <button id="add" class="operation-btn" onclick="add()">+</button>
+            <button id="sub" class="operation-btn" onclick="sub()">−</button>
+            <button id="mul" class="operation-btn" onclick="mul()">×</button>
+            <button id="divd" class="operation-btn" onclick="divd()">÷</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
