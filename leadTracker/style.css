@@ -1,0 +1,36 @@
+body{
+    background: white;
+    margin:0;
+    padding: 10px;
+}
+
+#input-el{
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border:1px solid green;
+    box-sizing: border-box;
+    
+
+}
+
+#save-btn{
+    margin-top: 10px;
+    padding: 10px 50px;
+    font-size: large;
+    font-weight: bold;
+    background: rgb(68, 128, 8);
+    border: none;
+    color:white;
+    cursor: pointer;
+}
+
+#container{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color:tomato;
+}
