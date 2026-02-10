@@ -34,3 +34,17 @@ body{
     gap: 10px;
     color:tomato;
 }
+ul{
+    list-style: none;
+    color:green;
+    padding-left: 0%;
+    margin-top:20px;
+    
+}
+li{
+    margin-bottom: 5px;
+}
+a{
+    color: green;
+    font-size: large;
+}
