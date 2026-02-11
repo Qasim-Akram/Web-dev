@@ -21,7 +21,6 @@ function renderLead() {
          </a>
           </li>`
     list.innerHTML += listItem
-    console.log(listItem)
 
 
 }
