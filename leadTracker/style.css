@@ -17,7 +17,7 @@ body{
 
 }
 
-#save-btn , #deleteall-btn{
+#save-btn,#save-tab {
     margin-top: 10px;
     padding: 10px 20px;
     font-size: large;
@@ -25,6 +25,18 @@ body{
     background: rgb(68, 128, 8);
     border: none;
     color:white;
+    cursor: pointer;
+    min-width: 100px;
+
+}
+#deleteall-btn{
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: large;
+    font-weight: bold;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(58, 150, 5);
+    color:rgb(58, 150, 5);
     cursor: pointer;
     min-width: 100px;
 
