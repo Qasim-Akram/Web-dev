@@ -1,91 +1,75 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    padding: 0%;
-    margin: 0%;
-    text-align: center;
-    align-items: center;
-    background-color: rgba(37, 37, 204, 0.76);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: bolder;
-    font-size: larger;
-
-
-
-
-}
-
-#intro {
-    margin-top: 30%;
-    height: 250px;
-    margin-top: 0%;
-
-
-
-}
-
-#ans {
-    background: rgb(197, 192, 192);
-    height: 300px;
-    align-items: center;
-    text-align: center;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-top: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgba(37, 37, 204, 0.76);
+}
 
 
+#intro {
+    padding: 40px 20px;
+    text-align: center;
 }
 
 h1 {
-    margin-top: 40px;
     color: white;
-
-
+    margin-bottom: 30px;
 }
 
-h3 {
-    color: black;
-}
-
-footer {
-    background: white;
-}
-
-.conversion {
-
-    background-color: rgb(250, 253, 253);
-    height: 100px;
-    width: 500px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-
-
-
-}
 
 #input {
     background: rgba(87, 87, 218, 0.76);
     color: white;
-    height: 60px;
-    width: 80px;
-    border: 1px solid white;
-    border-radius: 10%;
-    font-size: 40px;
+    height: 70px;
+    width: 120px;
+    border: 2px solid white;
+    border-radius: 10px;
+    font-size: 32px;
     font-weight: bold;
     text-align: center;
 }
 
+
 #convert {
+    display: block;
+    margin: 30px auto 0;
+    padding: 10px 20px;
     background: white;
-    margin-top: 40px;
-    height: 35px;
-    width: 90px;
-    border-radius: 5px;
-    border: 1px solid white;
+    border-radius: 6px;
+    border: none;
     font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
 #convert:hover {
     background: rgb(134, 136, 136);
     color: white;
-    cursor: pointer;
+}
+
+#ans {
+    background: rgb(197, 192, 192);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 40px 20px;
+}
+
+.conversion {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
 }
