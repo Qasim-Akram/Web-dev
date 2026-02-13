@@ -10,9 +10,11 @@ const imgs = [
 ]
 
 function renderImg() {
+    let imgDom =""
     for (let i = 0; i < imgs.length; i++) {
-        containerImg.innerHTML += `<img class="image" src="${imgs[i]}">`;
+        imgDom += `<img class="image" src="${imgs[i]}">`;
     }
+    containerImg.innerHTML = imgDom
 }
 
 renderImg()
