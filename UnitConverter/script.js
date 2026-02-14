@@ -10,6 +10,7 @@ const mass = document.getElementById("mass")
 
 convertBtn.addEventListener("click", function () {
     const input = Number(userInput.value);
+    if(input <= 0){ return}
     convertLen(input)
     convertVol(input)
     convertMas(input)
