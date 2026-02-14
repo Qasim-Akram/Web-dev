@@ -4,7 +4,6 @@ Welcome to my learning repository! This project tracks my progress from the basi
 
 **Repo Link:** [https://github.com/Qasim-Akram/Web-dev/](https://github.com/Qasim-Akram/Web-dev/)
 
----
 
 ## 📂 Project Structure
 
