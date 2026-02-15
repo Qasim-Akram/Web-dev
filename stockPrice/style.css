@@ -1,3 +1,31 @@
-*{
-    background:back; 
+body {
+    background:rgb(109, 103, 103); 
+    align-items: center;
+    margin-top: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+ 
+h1{
+    text-align: center;
+    font-weight: bolder;
+}
+
+h3{
+    color: rgb(0, 0, 0);
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(253, 253, 253);
+    border:1px solid black;
+    border-radius: 10px;
+     padding-left: 20px;
+
+    
+}
+#for-icon{
+    display: flex;
+    
 }
