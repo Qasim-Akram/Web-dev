@@ -1,0 +1,9 @@
+*,body{
+    background: rgb(134, 131, 131);
+    
+}
+#content{
+    display: flex;
+    gap: 1rem;
+    
+}
