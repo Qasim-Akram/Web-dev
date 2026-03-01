@@ -1,9 +1,19 @@
 *,body{
-    background: rgb(134, 131, 131);
+    background: rgb(219, 216, 216);
     
 }
 #content{
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+
+    
+}
+
+.container{
+    border: 1px double white;
+    border-radius: 10px;
+    width: 400px ;
+    padding: 0px 20px;
     
 }
