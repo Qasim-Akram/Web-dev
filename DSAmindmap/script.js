@@ -1179,7 +1179,7 @@ public:
         function applyT() { world.style.transform = `translate(${tx}px,${ty}px) scale(${scale})` }
         function fit() {
             const vw = vp.offsetWidth, vh = vp.offsetHeight - 80;
-            scale = Math.min(vw / worldW, vh / worldH) * 0.88;
+            scale = Math.min(vw / worldW, vh / worldH) * 2.32;
             tx = (vp.offsetWidth - worldW * scale) / 2;
             ty = (vp.offsetHeight - worldH * scale) / 2 + 48;
             applyT();
