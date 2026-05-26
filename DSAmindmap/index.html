@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Mind Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #f5f0e8;
+  font-family: 'Lora', serif;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  cursor: default;
+  user-select: none;
+}
+
+/* Subtle paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(180,160,120,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(160,140,100,0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+svg#lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Nodes --- */
+.node {
+  position: absolute;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.node:hover { transform: translate(-50%, -50%) scale(1.07); }
+
+/* Center node */
+.node-center .bubble {
+  background: #2c2c2c;
+  color: #f5f0e8;
+  border-radius: 50%;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: 4px 5px 0 rgba(0,0,0,0.18);
+  border: 2.5px solid #2c2c2c;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Main topic nodes */
+.node-topic .bubble {
+  border-radius: 12px;
+  width: 100px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 3px 4px 0 rgba(0,0,0,0.15);
+  border: 2px solid;
+  text-align: center;
+  line-height: 1.3;
+  padding: 6px;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.node-topic:hover .bubble {
+  box-shadow: 5px 6px 0 rgba(0,0,0,0.2);
+}
+
+.node-topic.active .bubble {
+  box-shadow: 6px 7px 0 rgba(0,0,0,0.22);
+  transform: translate(0,0) scale(1.05);
+}
+
+/* Sub nodes (algorithms) */
+.node-sub {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+
+.node-sub.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.node-sub .bubble {
+  border-radius: 50px;
+  padding: 7px 14px;
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 2px 3px 0 rgba(0,0,0,0.13);
+  border: 1.5px solid;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+
+.node-sub .bubble:hover {
+  box-shadow: 3px 4px 0 rgba(0,0,0,0.2);
+}
+
+/* Detail panel */
+#detail-panel {
+  position: fixed;
+  right: -380px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 340px;
+  background: #fffdf7;
+  border: 2px solid #2c2c2c;
+  border-radius: 14px;
+  padding: 24px 22px;
+  box-shadow: 6px 8px 0 rgba(0,0,0,0.15);
+  z-index: 100;
+  transition: right 0.38s cubic-bezier(0.22,1,0.36,1);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#detail-panel.open { right: 20px; }
+
+#detail-panel::-webkit-scrollbar { width: 4px; }
+#detail-panel::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+.panel-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: none; border: none;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+
+.panel-close:hover { color: #2c2c2c; }
+
+.panel-tag {
+  font-family: 'Caveat', cursive;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 6px;
+}
+
+.panel-title {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+.panel-situation {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  border-left: 3px solid;
+  padding-left: 10px;
+}
+
+.panel-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.panel-badge {
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1.5px solid;
+  color: #555;
+  background: rgba(0,0,0,0.04);
+}
+
+.panel-section-label {
+  font-family: 'Caveat', cursive;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 5px;
+  margin-top: 12px;
+}
+
+.panel-text {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.panel-code {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  background: #f0ece0;
+  border: 1px solid #d8d0bc;
+  border-radius: 8px;
+  padding: 12px 14px;
+  line-height: 1.8;
+  color: #3a3a3a;
+  white-space: pre;
+  overflow-x: auto;
+  margin-top: 6px;
+}
+
+/* Hint */
+#hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: #aaa;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.5s;
+}
+
+/* Topic colors */
+/* defined inline via JS */
+</style>
+</head>
+<body>
+<div id="canvas">
+  <svg id="lines"></svg>
+</div>
+<div id="detail-panel">
+  <button class="panel-close" id="panel-close">✕</button>
+  <div id="panel-content"></div>
+</div>
+<div id="hint">click a topic to explore its algorithms</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const TOPICS = [
+  {
+    id: 'array', label: 'Arrays',
+    color: '#d4845a', bg: '#fef3ec', border: '#d4845a',
+    algos: [
+      { name: 'Binary Search', situation: 'Array is sorted; find target or boundary fast', time: 'O(log n)', space: 'O(1)', when: 'Sorted array, find target / answer a condition', how: 'Halve the search space each step by comparing midpoint', code: `int lo=0, hi=n-1;
+while(lo<=hi){
+  int mid=(lo+hi)/2;
+  if(arr[mid]==target) return mid;
+  else if(arr[mid]<target) lo=mid+1;
+  else hi=mid-1;
+}` },
+      { name: 'Two Pointers', situation: 'Pair sum, remove duplicates, reverse in-place', time: 'O(n)', space: 'O(1)', when: 'Sorted input, find pairs, squeeze from both ends', how: 'Start l=0 r=n-1, move based on condition', code: `int l=0, r=n-1;
+while(l<r){
+  if(arr[l]+arr[r]==target) return {l,r};
+  else if(sum<target) l++;
+  else r--;
+}` },
+      { name: 'Sliding Window', situation: 'Max/min subarray of size k, longest substring', time: 'O(n)', space: 'O(1)', when: 'Contiguous subarray or substring with constraint', how: 'Expand right, shrink left when condition breaks', code: `int sum=0, best=0;
+for(int i=0;i<k;i++) sum+=arr[i];
+best=sum;
+for(int i=k;i<n;i++){
+  sum+=arr[i]-arr[i-k];
+  best=max(best,sum);
+}` },
+      { name: 'Prefix Sum', situation: 'Multiple range sum queries on static array', time: 'O(1) query', space: 'O(n)', when: 'Precompute once; answer many range queries', how: 'pre[i] = pre[i-1]+arr[i]; query = pre[R]-pre[L-1]', code: `pre[0]=arr[0];
+for(int i=1;i<n;i++)
+  pre[i]=pre[i-1]+arr[i];
+// range [L,R]:
+int ans=pre[R]-(L?pre[L-1]:0);` },
+      { name: "Kadane's", situation: 'Maximum sum contiguous subarray', time: 'O(n)', space: 'O(1)', when: 'Array has negatives; find max subarray sum', how: 'Reset running sum to current element if it goes below it', code: `int curr=arr[0], best=arr[0];
+for(int i=1;i<n;i++){
+  curr=max(arr[i],curr+arr[i]);
+  best=max(best,curr);
+}` },
+    ]
+  },
+  {
+    id: 'linked', label: 'Linked List',
+    color: '#5a8fd4', bg: '#ecf3fe', border: '#5a8fd4',
+    algos: [
+      { name: "Floyd's Cycle", situation: 'Detect if linked list has a loop', time: 'O(n)', space: 'O(1)', when: 'Cycle detection, find cycle entry point', how: 'Slow +1, Fast +2; if they meet → cycle exists', code: `Node *s=head, *f=head;
+while(f&&f->next){
+  s=s->next;
+  f=f->next->next;
+  if(s==f) return true;
+}
+return false;` },
+      { name: 'Reverse List', situation: 'Reverse entire list or sub-range', time: 'O(n)', space: 'O(1)', when: 'Palindrome check, reverse k-group', how: 'Three pointers: prev=null, curr, next; re-link one by one', code: `Node *prev=nullptr, *curr=head;
+while(curr){
+  Node *nxt=curr->next;
+  curr->next=prev;
+  prev=curr; curr=nxt;
+}
+return prev;` },
+      { name: 'Find Middle', situation: 'Find mid in one pass — no length needed', time: 'O(n)', space: 'O(1)', when: 'Split list, palindrome, merge sort on list', how: 'Slow/fast: when fast ends, slow = middle', code: `Node *s=head, *f=head;
+while(f->next&&f->next->next){
+  s=s->next;
+  f=f->next->next;
+}
+return s; // middle` },
+      { name: 'Merge Sorted', situation: 'Merge two sorted lists into one', time: 'O(n+m)', space: 'O(1)', when: 'Merge step in merge sort, combining results', how: 'Compare heads; pick smaller; advance that pointer', code: `Node* merge(Node* a, Node* b){
+  if(!a) return b; if(!b) return a;
+  if(a->val<=b->val){
+    a->next=merge(a->next,b);
+    return a;
+  }
+  b->next=merge(a,b->next);
+  return b;
+}` },
+    ]
+  },
+  {
+    id: 'stack', label: 'Stack',
+    color: '#7ab85a', bg: '#f0f7ec', border: '#7ab85a',
+    algos: [
+      { name: 'Mono Stack', situation: 'Next Greater / Previous Smaller element for each index', time: 'O(n)', space: 'O(n)', when: 'NGE, NSE, Largest Rectangle in Histogram', how: 'Maintain increasing/decreasing stack; pop when violated', code: `vector<int> nge(n,-1);
+stack<int> st;
+for(int i=0;i<n;i++){
+  while(!st.empty()&&arr[st.top()]<arr[i])
+    { nge[st.top()]=arr[i]; st.pop(); }
+  st.push(i);
+}` },
+      { name: 'Balanced Brackets', situation: 'Validate (), [], {} nesting', time: 'O(n)', space: 'O(n)', when: 'Syntax checking, valid expression', how: 'Push opens; on close, match with stack top', code: `stack<char> st;
+for(char c:s){
+  if(c=='('||c=='['||c=='{') st.push(c);
+  else{
+    if(st.empty()) return false;
+    char t=st.top(); st.pop();
+    if(c==')'&&t!='(') return false;
+  }
+}
+return st.empty();` },
+      { name: 'Min Stack', situation: 'Stack that returns minimum in O(1) always', time: 'O(1)', space: 'O(n)', when: 'Track min while supporting push/pop', how: 'Two stacks: one main, one tracking minimums', code: `stack<int> main_s, min_s;
+void push(int x){
+  main_s.push(x);
+  if(min_s.empty()||x<=min_s.top())
+    min_s.push(x);
+}
+int getMin(){ return min_s.top(); }` },
+    ]
+  },
+  {
+    id: 'queue', label: 'Queue',
+    color: '#b85ab8', bg: '#f7ecf7', border: '#b85ab8',
+    algos: [
+      { name: 'BFS', situation: 'Shortest path unweighted graph, level-order tree', time: 'O(V+E)', space: 'O(V)', when: 'Shortest path (unweighted), explore level by level', how: 'Queue: push start, process neighbors iteratively', code: `queue<int> q;
+vector<bool> vis(n,false);
+q.push(src); vis[src]=true;
+while(!q.empty()){
+  int u=q.front(); q.pop();
+  for(int v:adj[u])
+    if(!vis[v]){vis[v]=true;q.push(v);}
+}` },
+      { name: 'Sliding Max', situation: 'Max in every window of size k in O(n)', time: 'O(n)', space: 'O(k)', when: 'Find max/min in every window without nested loop', how: 'Deque stores indices decreasingly; front = current max', code: `deque<int> dq;
+for(int i=0;i<n;i++){
+  while(!dq.empty()&&dq.front()<i-k+1)
+    dq.pop_front();
+  while(!dq.empty()&&arr[dq.back()]<arr[i])
+    dq.pop_back();
+  dq.push_back(i);
+  if(i>=k-1) res.push_back(arr[dq.front()]);
+}` },
+    ]
+  },
+  {
+    id: 'tree', label: 'Trees',
+    color: '#c4953a', bg: '#fef8ec', border: '#c4953a',
+    algos: [
+      { name: 'DFS Traversals', situation: 'Visit every node: inorder/preorder/postorder', time: 'O(n)', space: 'O(h)', when: 'Print sorted BST (inorder), copy, delete tree', how: 'Inorder: left→root→right. Recurse at each node.', code: `void inorder(Node* r){
+  if(!r) return;
+  inorder(r->left);
+  cout<<r->val<<" ";
+  inorder(r->right);
+}` },
+      { name: 'Level Order', situation: 'Process tree level by level', time: 'O(n)', space: 'O(w)', when: 'Height, zigzag, right side view', how: 'Queue-based BFS; push children at each step', code: `queue<Node*> q; q.push(root);
+while(!q.empty()){
+  int sz=q.size();
+  while(sz--){
+    Node* n=q.front();q.pop();
+    cout<<n->val<<" ";
+    if(n->left) q.push(n->left);
+    if(n->right) q.push(n->right);
+  }
+}` },
+      { name: 'Diameter', situation: 'Longest path between any two nodes', time: 'O(n)', space: 'O(h)', when: 'Diameter, balance check, path problems', how: 'Post-order: height(left)+height(right) = path through root', code: `int dia=0;
+int h(Node* r){
+  if(!r) return 0;
+  int l=h(r->left), ri=h(r->right);
+  dia=max(dia,l+ri);
+  return 1+max(l,ri);
+}` },
+      { name: 'BST Insert', situation: 'Maintain sorted dynamic data', time: 'O(log n) avg', space: 'O(h)', when: 'Dynamic sorted set, range queries', how: 'Go left if val < root, right if val > root', code: `Node* insert(Node* r, int v){
+  if(!r) return new Node(v);
+  if(v<r->val) r->left=insert(r->left,v);
+  else r->right=insert(r->right,v);
+  return r;
+}` },
+    ]
+  },
+  {
+    id: 'graph', label: 'Graphs',
+    color: '#5ab8a8', bg: '#ecf7f5', border: '#5ab8a8',
+    algos: [
+      { name: 'DFS', situation: 'Cycle detection, connected components, topo sort', time: 'O(V+E)', space: 'O(V)', when: 'Explore all paths, detect cycle, backtracking', how: 'Recurse into unvisited neighbors; backtrack when done', code: `void dfs(int u,vector<bool>& vis){
+  vis[u]=true;
+  for(int v:adj[u])
+    if(!vis[v]) dfs(v,vis);
+}` },
+      { name: "Dijkstra's", situation: 'Shortest path, non-negative weights', time: 'O((V+E)logV)', space: 'O(V)', when: 'Single-source shortest path in weighted graph', how: 'Min-heap: always process nearest unvisited node first', code: `priority_queue<pi,vector<pi>,greater<pi>> pq;
+dist[src]=0; pq.push({0,src});
+while(!pq.empty()){
+  auto[d,u]=pq.top();pq.pop();
+  for(auto[v,w]:adj[u])
+    if(dist[u]+w<dist[v])
+      {dist[v]=dist[u]+w;pq.push({dist[v],v});}
+}` },
+      { name: 'Topo Sort', situation: 'Order tasks with dependencies (DAG only)', time: 'O(V+E)', space: 'O(V)', when: 'Build order, course schedule, dependency resolution', how: 'DFS + push to stack AFTER visiting all neighbors', code: `void topo(int u,vector<bool>&vis,stack<int>&st){
+  vis[u]=true;
+  for(int v:adj[u])
+    if(!vis[v]) topo(v,vis,st);
+  st.push(u);
+}` },
+    ]
+  },
+  {
+    id: 'dp', label: 'Dynamic\nProg.',
+    color: '#d45a5a', bg: '#feecec', border: '#d45a5a',
+    algos: [
+      { name: 'Memoization', situation: 'Any recursion with overlapping subproblems', time: 'O(states)', space: 'O(states)', when: 'Top-down DP: recursive + cache', how: 'Store result in map/array; return cached on revisit', code: `map<int,long long> dp;
+long long f(int n){
+  if(n<=1) return n;
+  if(dp.count(n)) return dp[n];
+  return dp[n]=f(n-1)+f(n-2);
+}` },
+      { name: '0/1 Knapsack', situation: 'Max value with weight limit, items not splittable', time: 'O(n·W)', space: 'O(n·W)', when: 'Include/exclude items with constraint', how: 'dp[i][w]=max(exclude item i, include item i)', code: `for(int i=1;i<=n;i++)
+  for(int w=0;w<=W;w++){
+    dp[i][w]=dp[i-1][w];
+    if(wt[i]<=w)
+      dp[i][w]=max(dp[i][w],
+        val[i]+dp[i-1][w-wt[i]]);
+  }` },
+      { name: 'LCS', situation: 'Longest Common Subsequence of two strings', time: 'O(n·m)', space: 'O(n·m)', when: 'Diff tools, DNA matching, edit distance', how: 'Match chars: +1+prev diagonal; else max(skip either)', code: `for(int i=1;i<=n;i++)
+  for(int j=1;j<=m;j++)
+    if(s1[i-1]==s2[j-1])
+      dp[i][j]=1+dp[i-1][j-1];
+    else
+      dp[i][j]=max(dp[i-1][j],dp[i][j-1]);` },
+      { name: 'Coin Change', situation: 'Min coins to make amount — classic DP', time: 'O(n·amt)', space: 'O(amt)', when: 'Min/max count, items reusable', how: 'For each amount: try all coins, take minimum', code: `vector<int> dp(amt+1,INT_MAX);
+dp[0]=0;
+for(int a=1;a<=amt;a++)
+  for(int c:coins)
+    if(c<=a&&dp[a-c]!=INT_MAX)
+      dp[a]=min(dp[a],1+dp[a-c]);` },
+    ]
+  },
+  {
+    id: 'sorting', label: 'Sorting',
+    color: '#888888', bg: '#f4f4f4', border: '#888888',
+    algos: [
+      { name: 'Merge Sort', situation: 'Stable sort; also counts inversions', time: 'O(n log n)', space: 'O(n)', when: 'Stable sort needed, sort linked list, count inversions', how: 'Divide, sort halves, merge sorted halves', code: `void msort(arr,l,r){
+  if(l>=r) return;
+  int m=(l+r)/2;
+  msort(arr,l,m);
+  msort(arr,m+1,r);
+  merge(arr,l,m,r);
+}` },
+      { name: 'Quick Sort', situation: 'General purpose — fastest in practice', time: 'O(n log n) avg', space: 'O(log n)', when: 'General sort on arrays (avoid nearly-sorted)', how: 'Pivot partitions array; recurse on both halves', code: `int part(arr,l,r){
+  int p=arr[r],i=l-1;
+  for(int j=l;j<r;j++)
+    if(arr[j]<=p) swap(arr[++i],arr[j]);
+  swap(arr[i+1],arr[r]);
+  return i+1;
+}` },
+      { name: 'Counting Sort', situation: 'Integer keys in small known range — O(n)', time: 'O(n+k)', space: 'O(k)', when: 'Keys are integers in [0..k], k is small', how: 'Count freq, cumulate, place in output reverse', code: `vector<int> cnt(k+1,0);
+for(int x:arr) cnt[x]++;
+for(int i=1;i<=k;i++) cnt[i]+=cnt[i-1];
+for(int i=n-1;i>=0;i--)
+  out[--cnt[arr[i]]]=arr[i];` },
+    ]
+  },
+];
+
+// ─── LAYOUT (positions in %) ─────────────────────────────────────────────────
+// Center at 50,50. Topic nodes arranged radially.
+const CENTER = { x: 50, y: 50 };
+
+const TOPIC_POSITIONS = [
+  { id: 'array',   x: 20, y: 18 },
+  { id: 'linked',  x: 50, y: 12 },
+  { id: 'stack',   x: 78, y: 20 },
+  { id: 'queue',   x: 84, y: 50 },
+  { id: 'tree',    x: 76, y: 78 },
+  { id: 'graph',   x: 50, y: 86 },
+  { id: 'dp',      x: 22, y: 80 },
+  { id: 'sorting', x: 14, y: 50 },
+];
+
+// Sub-node offsets (relative angle spread around topic node)
+function getSubPositions(topicPos, count) {
+  // Vector from center to topic
+  const dx = topicPos.x - CENTER.x;
+  const dy = topicPos.y - CENTER.y;
+  const angle = Math.atan2(dy, dx);
+  const spread = Math.PI * 0.55;
+  const radius = 18; // % units
+
+  const positions = [];
+  for (let i = 0; i < count; i++) {
+    const t = count === 1 ? 0 : (i / (count - 1) - 0.5);
+    const a = angle + t * spread;
+    positions.push({
+      x: topicPos.x + radius * Math.cos(a),
+      y: topicPos.y + radius * Math.sin(a),
+    });
+  }
+  return positions;
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let activeTopicId = null;
+let subNodes = {}; // topicId -> [{el, x%, y%}]
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const svgEl = document.getElementById('lines');
+
+// Percent to px
+function pct(p, dim) {
+  return (p / 100) * dim;
+}
+
+// Draw SVG line
+function drawLine(svg, x1, y1, x2, y2, color, opacity = 0.55, dashed = false) {
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  line.setAttribute('stroke', color);
+  line.setAttribute('stroke-width', '1.8');
+  line.setAttribute('stroke-opacity', opacity);
+  line.setAttribute('stroke-linecap', 'round');
+  if (dashed) line.setAttribute('stroke-dasharray', '5,6');
+  return line;
+}
+
+// Draw curved SVG path
+function drawCurve(svg, x1, y1, x2, y2, color, opacity = 0.5) {
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  const cpx = (x1 + x2) / 2 + (Math.random() - 0.5) * 40;
+  const cpy = (y1 + y2) / 2 + (Math.random() - 0.5) * 40;
+  path.setAttribute('d', `M${x1},${y1} Q${cpx},${cpy} ${x2},${y2}`);
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width', '1.6');
+  path.setAttribute('stroke-opacity', opacity);
+  path.setAttribute('stroke-linecap', 'round');
+  return path;
+}
+
+function getNodeCenter(el) {
+  const rect = el.getBoundingClientRect();
+  const canRect = canvas.getBoundingClientRect();
+  return {
+    x: rect.left - canRect.left + rect.width / 2,
+    y: rect.top - canRect.top + rect.height / 2,
+  };
+}
+
+// Create center node
+function createCenterNode() {
+  const el = document.createElement('div');
+  el.className = 'node node-center';
+  el.style.left = CENTER.x + '%';
+  el.style.top = CENTER.y + '%';
+  el.innerHTML = `<div class="bubble">DSA</div>`;
+  canvas.appendChild(el);
+  return el;
+}
+
+// Create topic node
+function createTopicNode(topic, pos) {
+  const el = document.createElement('div');
+  el.className = 'node node-topic';
+  el.id = 'node-' + topic.id;
+  el.style.left = pos.x + '%';
+  el.style.top = pos.y + '%';
+  el.innerHTML = `<div class="bubble" style="background:${topic.bg};border-color:${topic.border};color:${topic.color}">${topic.label}</div>`;
+  canvas.appendChild(el);
+  return el;
+}
+
+// Create sub node
+function createSubNode(algo, topic, pos) {
+  const el = document.createElement('div');
+  el.className = 'node node-sub';
+  el.style.left = pos.x + '%';
+  el.style.top = pos.y + '%';
+  el.innerHTML = `<div class="bubble" style="background:${topic.bg};border-color:${topic.border};color:${topic.color}">${algo.name}</div>`;
+  canvas.appendChild(el);
+  return el;
+}
+
+// ─── LINES LAYER ─────────────────────────────────────────────────────────────
+let staticLines = []; // topic→center lines
+let dynamicLines = []; // sub→topic lines (recreated on expand)
+
+function clearDynamicLines() {
+  dynamicLines.forEach(l => l.remove());
+  dynamicLines = [];
+}
+
+function drawAllStaticLines(centerEl, topicEls) {
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  topicEls.forEach((tel, i) => {
+    const cc = getNodeCenter(centerEl);
+    const tc = getNodeCenter(tel);
+    const topic = TOPICS[i];
+    const line = drawCurve(svgEl, cc.x, cc.y, tc.x, tc.y, topic.color, 0.45);
+    svgEl.appendChild(line);
+    staticLines.push(line);
+  });
+}
+
+function drawSubLines(topicEl, subEls, color) {
+  subEls.forEach(subEl => {
+    const tc = getNodeCenter(topicEl);
+    const sc = getNodeCenter(subEl);
+    const line = drawLine(svgEl, tc.x, tc.y, sc.x, sc.y, color, 0.5, true);
+    svgEl.appendChild(line);
+    dynamicLines.push(line);
+  });
+}
+
+// ─── PANEL ───────────────────────────────────────────────────────────────────
+const panel = document.getElementById('detail-panel');
+const panelContent = document.getElementById('panel-content');
+const panelClose = document.getElementById('panel-close');
+
+function openPanel(algo, topic) {
+  panelContent.innerHTML = `
+    <div class="panel-tag">${topic.label} › Algorithm</div>
+    <div class="panel-title" style="color:${topic.color}">${algo.name}</div>
+    <div class="panel-situation" style="border-color:${topic.color}">${algo.situation}</div>
+    <div class="panel-badges">
+      <span class="panel-badge" style="border-color:${topic.border}">⏱ ${algo.time}</span>
+      <span class="panel-badge" style="border-color:${topic.border}">💾 ${algo.space}</span>
+    </div>
+    <div class="panel-section-label">when to use</div>
+    <div class="panel-text">${algo.when}</div>
+    <div class="panel-section-label">how it works</div>
+    <div class="panel-text">${algo.how}</div>
+    <div class="panel-section-label">c++ snippet</div>
+    <div class="panel-code">${algo.code}</div>
+  `;
+  panel.classList.add('open');
+}
+
+function closePanel() {
+  panel.classList.remove('open');
+}
+
+panelClose.addEventListener('click', closePanel);
+
+// ─── TOPIC CLICK ─────────────────────────────────────────────────────────────
+function expandTopic(topic, topicEl) {
+  const isSame = activeTopicId === topic.id;
+
+  // Collapse all subs
+  Object.values(subNodes).forEach(arr => {
+    arr.forEach(s => s.el.classList.remove('visible'));
+  });
+  clearDynamicLines();
+  document.querySelectorAll('.node-topic').forEach(n => n.classList.remove('active'));
+  closePanel();
+
+  if (isSame) {
+    activeTopicId = null;
+    return;
+  }
+
+  activeTopicId = topic.id;
+  topicEl.classList.add('active');
+
+  // Show subs
+  const subs = subNodes[topic.id] || [];
+  subs.forEach(s => s.el.classList.add('visible'));
+
+  // Draw dashed lines after a tick (so elements are positioned)
+  requestAnimationFrame(() => {
+    const subEls = subs.map(s => s.el);
+    drawSubLines(topicEl, subEls, topic.color);
+  });
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  const centerEl = createCenterNode();
+  const topicEls = [];
+
+  TOPICS.forEach((topic, ti) => {
+    const pos = TOPIC_POSITIONS[ti];
+    const tel = createTopicNode(topic, pos);
+    topicEls.push(tel);
+
+    // Sub nodes
+    const subPositions = getSubPositions(pos, topic.algos.length);
+    subNodes[topic.id] = topic.algos.map((algo, ai) => {
+      const subPos = subPositions[ai];
+      const subEl = createSubNode(algo, topic, subPos);
+
+      subEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openPanel(algo, topic);
+      });
+
+      return { el: subEl, x: subPos.x, y: subPos.y };
+    });
+
+    tel.addEventListener('click', () => expandTopic(topic, tel));
+  });
+
+  // Lines drawn after DOM settle
+  requestAnimationFrame(() => {
+    drawAllStaticLines(centerEl, topicEls);
+  });
+}
+
+// Re-draw static lines on resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
+    staticLines = [];
+    clearDynamicLines();
+    const centerEl = document.querySelector('.node-center');
+    const topicEls = TOPICS.map(t => document.getElementById('node-' + t.id));
+    drawAllStaticLines(centerEl, topicEls);
+    if (activeTopicId) {
+      const topic = TOPICS.find(t => t.id === activeTopicId);
+      const topicEl = document.getElementById('node-' + activeTopicId);
+      const subs = subNodes[activeTopicId] || [];
+      drawSubLines(topicEl, subs.map(s => s.el), topic.color);
+    }
+  }, 100);
+});
+
+// Hide hint on first click
+let hintHidden = false;
+canvas.addEventListener('click', () => {
+  if (!hintHidden) {
+    document.getElementById('hint').style.opacity = '0';
+    hintHidden = true;
+  }
+});
+
+init();
+</script>
+</body>
+</html>
