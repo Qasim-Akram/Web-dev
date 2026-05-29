@@ -1,6 +1,4 @@
-// ─── DATA ────────────────────────────────────────────────────────────────────
 const TOPICS = [
-  // ═══ LEFT SIDE ═══
   {
     id: 'array', label: 'Arrays', color: '#c0531a', bg: '#fff5ef', border: '#f0c4a0', side: 'left',
     algos: [
@@ -1135,7 +1133,7 @@ public:
   },
 ];
 
-// ─── LAYOUT ──────────────────────────────────────────────────────────────────
+
 const LEFT = TOPICS.filter(t => t.side === 'left');
 const RIGHT = TOPICS.filter(t => t.side === 'right');
 const V_GAP = 80, LEAF_VGAP = 32, LEAF_XGAP = 185;
@@ -1164,7 +1162,7 @@ const rightLayout = assignY(RIGHT, rightH);
 const LEFT_TX = CX - 280, RIGHT_TX = CX + 280;
 const LEFT_LX = CX - 280 - LEAF_XGAP, RIGHT_LX = CX + 280 + LEAF_XGAP;
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
+
 let activeId = null;
 const nodeMap = {}, leafMap = {};
 let dynPaths = [];
@@ -1173,7 +1171,7 @@ world.style.width = worldW + 'px';
 world.style.height = worldH + 'px';
 const svg = document.getElementById('lines');
 
-// ─── PAN/ZOOM ─────────────────────────────────────────────────────────────────
+
 const vp = document.getElementById('viewport');
 let scale = 1, tx = 0, ty = 0, drag = false, sx, sy, stx, sty;
 function applyT() { world.style.transform = `translate(${tx}px,${ty}px) scale(${scale})` }
@@ -1215,7 +1213,6 @@ document.getElementById('bi').onclick = () => { scale = Math.min(3, scale * 1.2)
 document.getElementById('bo').onclick = () => { scale = Math.max(.15, scale / 1.2); applyT() };
 document.getElementById('bf').onclick = fit;
 
-// ─── SVG LINE ─────────────────────────────────────────────────────────────────
 function hLine(x1, y1, x2, y2, color, dashed) {
   const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   const mx = (x1 + x2) / 2;
@@ -1228,19 +1225,17 @@ function hLine(x1, y1, x2, y2, color, dashed) {
   return p;
 }
 
-// ─── NODE FACTORY ─────────────────────────────────────────────────────────────
 function mkEl(cls, x, y, html) {
   const el = document.createElement('div');
   el.className = cls; el.style.left = x + 'px'; el.style.top = y + 'px';
   el.innerHTML = html; world.appendChild(el); return el;
 }
 function impStar(imp) {
-  if (imp === 'must') return '<span class="leaf-imp">🔥</span>';
-  if (imp === 'high') return '<span class="leaf-imp">⭐</span>';
+  if (imp === 'must') return '<span class="leaf-imp">🔴</span>';
+  if (imp === 'high') return '<span class="leaf-imp">🟢</span>';
   return '';
 }
 
-// ─── PANEL ────────────────────────────────────────────────────────────────────
 const panel = document.getElementById('panel');
 function openPanel(algo, topic) {
   document.getElementById('ph-bc').textContent = topic.label + ' › Algorithm';
@@ -1266,7 +1261,7 @@ function openPanel(algo, topic) {
 }
 document.getElementById('ph-close').onclick = () => panel.classList.remove('open');
 
-// ─── EXPAND ───────────────────────────────────────────────────────────────────
+
 function clearDyn() { dynPaths.forEach(p => p.remove()); dynPaths = [] }
 function expand(id) {
   const same = activeId === id;
@@ -1284,11 +1279,9 @@ function expand(id) {
   });
 }
 
-// ─── BUILD ────────────────────────────────────────────────────────────────────
 function build() {
   mkEl('center-node', CX, worldH / 2, 'DSA');
   function addTopic(t, txp, lxp, side) {
-    // computed in layout arrays
   }
   [[leftLayout, LEFT_TX, LEFT_LX], [rightLayout, RIGHT_TX, RIGHT_LX]].forEach(([layout, txp, lxp]) => {
     layout.forEach(({ topic, ty, leafStartY }) => {
