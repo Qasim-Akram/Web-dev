@@ -682,7 +682,7 @@ for(int i=0;i<n;i++)
         sit: 'Longest Common Subsequence — characters need not be contiguous.',
         when: 'Diff tools, DNA matching, edit distance, shortest common supersequence.',
         how: 'Match: 1+diagonal. Mismatch: max(skip-row, skip-col). Build bottom-up table.',
-        rec: 'Foundation of string DP. Edit Distance and SCS build directly on this.',,
+        rec: 'Foundation of string DP. Edit Distance and SCS build directly on this.',
         code: `vector<vector<int>> dp(n+1,vector<int>(m+1,0));
 for(int i=1;i<=n;i++)
   for(int j=1;j<=m;j++){
@@ -889,7 +889,7 @@ for(int i=1;i<n;i++){
         sit: 'Can you reach end? What is minimum jumps? Both are greedy.',
         when: 'Jump Game I (can reach), Jump Game II (min jumps).',
         how: 'Track farthest reachable. Greedily advance. For min jumps, track current level end.',
-        rec: 'Two variants (reach + min jumps) both commonly asked. LC45 and LC55.',,
+        rec: 'Two variants (reach + min jumps) both commonly asked. LC45 and LC55.',
         code: `// Can reach end (LC55)
 int reach=0;
 for(int i=0;i<n;i++){
