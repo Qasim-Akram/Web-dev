@@ -7,7 +7,7 @@ const TOPICS = [
         sit: 'Sorted array — find element or boundary faster than linear scan.',
         when: 'Sorted array, rotated array, answer-space search (min speed, capacity, etc.).',
         how: 'Maintain lo/hi. Compute mid. Eliminate half. Choose strict vs ≤ by problem variant.',
-        rec: '🔥 Asked at every company (Systems, FAANG, startups). Know all 4 variants: exact, first occurrence, last occurrence, rotated.',
+        rec: 'Asked at every company (Systems, FAANG, startups). Know all 4 variants: exact, first occurrence, last occurrence, rotated.',
         code: `int lo=0, hi=n-1;
 while(lo<=hi){
   int mid=lo+(hi-lo)/2;
@@ -21,7 +21,7 @@ return -1; // not found`},
         sit: 'Replace O(n²) nested loops with O(n) using two indices moving toward each other.',
         when: 'Sorted array pair sum, 3Sum, container with most water, palindrome, remove duplicates.',
         how: 'l=0, r=n-1. Move toward each other based on comparison result.',
-        rec: '🔥 Covers ~25% of array problems. Know opposite-end AND slow/fast (same direction) variants.',
+        rec: ' Covers ~25% of array problems. Know opposite-end AND slow/fast (same direction) variants.',
         code: `int l=0, r=n-1;
 while(l<r){
   int s=arr[l]+arr[r];
@@ -34,7 +34,7 @@ while(l<r){
         sit: 'Max/min over contiguous subarray — fixed or variable size, O(n) not O(n²).',
         when: 'Max sum k-elements, longest substring without repeat, min window substring, at most k distinct.',
         how: 'Expand right pointer. Shrink left when constraint is violated. Track answer at each valid state.',
-        rec: '🔥 Extremely common at FAANG and Pakistani product companies. Variable window + freq map is top pattern.',
+        rec: ' Extremely common at FAANG and Pakistani product companies. Variable window + freq map is top pattern.',
         code: `int l=0, ans=0;
 unordered_map<char,int> mp;
 for(int r=0;r<n;r++){
@@ -48,7 +48,7 @@ return ans;`},
         sit: 'Answer range-sum queries in O(1) after O(n) preprocessing.',
         when: 'Multiple range queries, subarray sum equals k (with hash map), 2D range sums.',
         how: 'pre[i]=pre[i-1]+arr[i]. Range[L..R] = pre[R+1]−pre[L]. Combine with map for sum=k.',
-        rec: '⭐ Paired with hash map for "subarray sum = k" — extremely common at TikTok, Google.',
+        rec: 'Paired with hash map for "subarray sum = k" — extremely common at TikTok, Google.',
         code: `vector<int> pre(n+1,0);
 for(int i=0;i<n;i++) pre[i+1]=pre[i]+arr[i];
 
@@ -68,7 +68,7 @@ for(int x:arr){
         sit: 'Maximum sum contiguous subarray — most iconic DP/array problem.',
         when: 'Max subarray sum. Extend: max product subarray, max circular subarray.',
         how: 'curr=max(arr[i], curr+arr[i]). Track global best. Product variant: track min too.',
-        rec: '🔥 Warm-up at every interview. If asked "max subarray" → Kadane. Product variant is harder.',
+        rec: ' Warm-up at every interview. If asked "max subarray" → Kadane. Product variant is harder.',
         code: `int curr=arr[0], best=arr[0];
 for(int i=1;i<n;i++){
   curr=max(arr[i], curr+arr[i]);
@@ -83,7 +83,7 @@ return best;
         sit: 'Sort array of 3 values (0s, 1s, 2s) in single pass without counting.',
         when: 'Sort colors/categories in-place; partition for 3-way quicksort.',
         how: '3 pointers: lo, mid, hi. Swap based on arr[mid] value.',
-        rec: '⭐ Classic interview question at Systems Ltd, Arbisoft, Folio3.',
+        rec: ' Classic interview question at Systems Ltd, Arbisoft, Folio3.',
         code: `int lo=0, mid=0, hi=n-1;
 while(mid<=hi){
   if(arr[mid]==0) swap(arr[lo++],arr[mid++]);
@@ -100,7 +100,7 @@ while(mid<=hi){
         sit: 'Detect cycle without extra space. Find cycle entry point too.',
         when: 'Cycle detection, find duplicate number (LC287), find cycle start.',
         how: 'Slow +1, Fast +2. If meet → cycle. Reset slow to head, both +1 → entry point.',
-        rec: '🔥 Top-10 linked list question. Know cycle entry variant — asked by Google, Microsoft.',
+        rec: ' Top-10 linked list question. Know cycle entry variant — asked by Google, Microsoft.',
         code: `ListNode *s=head, *f=head;
 while(f&&f->next){
   s=s->next; f=f->next->next;
@@ -116,7 +116,7 @@ return nullptr;`},
         sit: 'Reverse singly linked list in-place — foundation for many problems.',
         when: 'Palindrome check, reverse k-group, reorder list, reverse between i and j.',
         how: 'prev=null, curr=head. Re-link curr→prev. Advance all three pointers.',
-        rec: '🔥 Must know iterative AND recursive. Know reverse-k-group (LC25) variant.',
+        rec: 'Must know iterative AND recursive. Know reverse-k-group (LC25) variant.',
         code: `// Iterative
 ListNode *prev=nullptr, *curr=head;
 while(curr){
@@ -138,7 +138,7 @@ ListNode* rev(ListNode* h){
         sit: 'Merge two sorted lists — core step of merge sort and merge-k-sorted.',
         when: 'Merge two sorted, merge k sorted lists (with priority queue).',
         how: 'Compare heads. Link the smaller. Advance that pointer. Recursively.',
-        rec: '🔥 Direct interview question + building block for merge-k-sorted-lists (harder variant).',
+        rec: 'Direct interview question + building block for merge-k-sorted-lists (harder variant).',
         code: `ListNode* merge(ListNode* a, ListNode* b){
   if(!a) return b; if(!b) return a;
   if(a->val<=b->val){
@@ -152,7 +152,7 @@ ListNode* rev(ListNode* h){
         sit: 'Middle of list in one pass — foundation for palindrome check and sort.',
         when: 'Split for merge sort on list, palindrome linked list check.',
         how: 'Slow +1, Fast +2. When fast ends, slow = middle. Two variants (1st vs 2nd middle).',
-        rec: '⭐ Common sub-problem. Ensure you know first-middle vs second-middle difference.',
+        rec: 'Common sub-problem. Ensure you know first-middle vs second-middle difference.',
         code: `ListNode *s=head, *f=head;
 while(f->next && f->next->next){
   s=s->next; f=f->next->next;
@@ -164,7 +164,7 @@ return s; // first middle (for even: prefer this)
         sit: 'Design cache that evicts Least Recently Used in O(1) get and put.',
         when: 'Cache design, any LRU/LFU system design question.',
         how: 'Hash map (key→node) + Doubly Linked List. Move accessed to front. Remove from tail.',
-        rec: '🔥 Classic design question asked at every Pakistani product company and FAANG.',
+        rec: 'Classic design question asked at every Pakistani product company and FAANG.',
         code: `class LRUCache{
   int cap;
   list<pair<int,int>> dll; // {key,val}
@@ -194,7 +194,7 @@ public:
         sit: 'Next Greater/Previous Smaller for every element in O(n) instead of O(n²).',
         when: 'NGE, NSE, Largest Rectangle in Histogram, Trapping Rain Water, Stock Span.',
         how: 'Stack stores indices. Pop when element violates monotonic order. Current element = answer for popped.',
-        rec: '🔥 Histogram + Trapping Water are top-10. This single pattern solves 5+ interview problems.',
+        rec: 'Histogram + Trapping Water are top-10. This single pattern solves 5+ interview problems.',
         code: `// Next Greater Element
 vector<int> nge(n,-1);
 stack<int> st;
@@ -213,7 +213,7 @@ for(int i=0;i<n;i++){
         sit: 'Validate bracket nesting — most common intro stack problem.',
         when: 'Syntax validation, valid expression, HTML/XML matching.',
         how: 'Push openers. On closer, check stack top matches. Empty at end = valid.',
-        rec: '🔥 Asked in almost every junior-level interview in Pakistan as a screener question.',
+        rec: 'Asked in almost every junior-level interview in Pakistan as a screener question.',
         code: `stack<char> st;
 for(char c:s){
   if(c=='('||c=='['||c=='{') st.push(c);
@@ -231,7 +231,7 @@ return st.empty();`},
         sit: 'Stack supporting O(1) getMin() at all times — design pattern.',
         when: 'Design minimum stack, design problems requiring constant-time minimum.',
         how: 'Auxiliary stack only pushes when new val ≤ current min.',
-        rec: '⭐ Standard design question. Often extended to "max stack" or "min queue".',
+        rec: 'Standard design question. Often extended to "max stack" or "min queue".',
         code: `stack<int> ms, mn;
 void push(int x){
   ms.push(x);
@@ -247,7 +247,7 @@ int getMin(){ return mn.top(); }`},
         sit: 'Days until warmer temperature — classic monotonic stack application.',
         when: 'Waiting time problems, next greater with distance, stock span problem.',
         how: 'Stack of indices. Pop when curr temp > stack top temp. Diff of indices = answer.',
-        rec: '⭐ Tests monotonic stack understanding cleanly. Very popular at product companies.',
+        rec: 'Tests monotonic stack understanding cleanly. Very popular at product companies.',
         code: `vector<int> ans(n,0);
 stack<int> st;
 for(int i=0;i<n;i++){
@@ -267,7 +267,7 @@ return ans;`},
         sit: 'Find pair/complement in O(n) — most fundamental hash map technique.',
         when: 'Pair sum, subarray sum = k, group anagrams, 4Sum, two-diff.',
         how: 'For each element check if complement exists in map. Store element as you scan.',
-        rec: '🔥 LeetCode #1. Most asked problem across all companies worldwide and in Pakistan.',
+        rec: 'LeetCode #1. Most asked problem across all companies worldwide and in Pakistan.',
         code: `unordered_map<int,int> mp;
 for(int i=0;i<n;i++){
   int comp=target-arr[i];
@@ -281,7 +281,7 @@ for(int i=0;i<n;i++){
         sit: 'Count occurrences to detect duplicates, anagrams, majority element.',
         when: 'Anagram check, group anagrams, top-k frequent, majority element, first non-repeat.',
         how: 'unordered_map to count. Query or sort by frequency. Boyer-Moore for majority.',
-        rec: '🔥 Used in dozens of problems. Group Anagrams and Top-K Frequent are extremely common.',
+        rec: 'Used in dozens of problems. Group Anagrams and Top-K Frequent are extremely common.',
         code: `// Group Anagrams
 unordered_map<string,vector<string>> mp;
 for(string& s:strs){
@@ -298,7 +298,7 @@ for(auto& [v,f]:freq) bucket[f].push_back(v);
         sit: 'Sliding window combined with frequency map for complex substring problems.',
         when: 'Longest without repeat, k distinct chars, min window substring, permutation in string.',
         how: 'Expand right, track freq in map, shrink left when constraint breaks. Count "valid" chars.',
-        rec: '🔥 Minimum Window Substring is a must-know hard problem. Asked at Google, Microsoft.',
+        rec: 'Minimum Window Substring is a must-know hard problem. Asked at Google, Microsoft.',
         code: `// Min Window Substring
 unordered_map<char,int> need,window;
 for(char c:t) need[c]++;
@@ -324,7 +324,7 @@ for(int r=0;r<s.size();r++){
         sit: 'Stable sort guaranteed O(n log n); also used to count inversions.',
         when: 'Stable sort, sort linked list (O(1) space), count inversions.',
         how: 'Split in half, recurse, merge two sorted halves. Count inversions during merge.',
-        rec: '🔥 Know implementation cold. Count Inversions variant asked by Goldman Sachs, Amazon.',
+        rec: 'Know implementation cold. Count Inversions variant asked by Goldman Sachs, Amazon.',
         code: `void mergeSort(vector<int>&a, int l, int r){
   if(l>=r) return;
   int m=l+(r-l)/2;
@@ -341,7 +341,7 @@ for(int r=0;r<s.size();r++){
         sit: 'Fastest in practice for arrays — in-place with O(log n) stack space.',
         when: 'General sort. QuickSelect for kth largest in O(n) average.',
         how: 'Partition around pivot (Lomuto or Hoare). Recurse both sides.',
-        rec: '⭐ Know partition cold. QuickSelect for Kth Largest (LC215) is very commonly asked.',
+        rec: 'Know partition cold. QuickSelect for Kth Largest (LC215) is very commonly asked.',
         code: `int partition(vector<int>&a, int l, int r){
   int pivot=a[r], i=l-1;
   for(int j=l;j<r;j++)
@@ -355,7 +355,7 @@ for(int r=0;r<s.size();r++){
         sit: 'Sort integers in O(n) when range is bounded — beats comparison sorts.',
         when: 'Keys in range [0..k], k small — chars, grades, small integers.',
         how: 'Count frequencies. Prefix sum for positions. Place stably. Radix: digit by digit.',
-        rec: '✓ Good for theory. Radix sort used in database internals questions.',
+        rec: 'Good for theory. Radix sort used in database internals questions.',
         code: `// Counting Sort
 vector<int> cnt(k+1,0);
 for(int x:arr) cnt[x]++;
@@ -368,7 +368,7 @@ for(int i=n-1;i>=0;i--)
         sit: 'Sort by custom key — intervals, strings as numbers, multi-key sort.',
         when: 'Merge intervals, largest number, sort by frequency, task scheduler.',
         how: 'Provide lambda or overload < operator. Know stable_sort for ties.',
-        rec: '⭐ "Largest Number" (sort as strings) and merge-intervals sort are very commonly asked.',
+        rec: '"Largest Number" (sort as strings) and merge-intervals sort are very commonly asked.',
         code: `// Largest Number: sort strings s.t. a+b > b+a
 sort(nums.begin(),nums.end(),[](string a,string b){
   return a+b > b+a;
@@ -388,7 +388,7 @@ sort(intervals.begin(),intervals.end(),[](auto&a,auto&b){
         sit: 'Find all occurrences of pattern in text — O(n+m) vs O(nm) brute force.',
         when: 'Pattern matching, repeated string check, shortest period of string.',
         how: 'Build LPS (failure function). On mismatch use LPS to skip characters intelligently.',
-        rec: '🔥 Must know for SDE roles. Frequently asked at Arbisoft, 10Pearls, NetSol.',
+        rec: 'Must know for SDE roles. Frequently asked at Arbisoft, 10Pearls, NetSol.',
         code: `// Build LPS array
 vector<int> lps(m,0);
 int len=0, i=1;
@@ -411,7 +411,7 @@ for(int i=0;i<n;){
         sit: 'Check if strings are anagrams or if string can be palindrome — O(n) with counting.',
         when: 'Valid anagram, group anagrams, palindrome permutation, longest palindrome.',
         how: 'Count char frequencies. Anagram: same counts. Palindrome: at most 1 odd count.',
-        rec: '🔥 Foundational string problem — asked at nearly every company as warm-up.',
+        rec: 'Foundational string problem — asked at nearly every company as warm-up.',
         code: `// Valid Anagram
 int freq[26]={};
 for(char c:s) freq[c-'a']++;
@@ -428,7 +428,7 @@ return odd<=1;`},
         sit: 'Find longest palindromic substring without O(n²) space (Manacher is O(n)).',
         when: 'Longest palindrome substring, count palindrome substrings, palindrome partitioning.',
         how: 'For each center (n odd + n-1 even), expand while chars match. Track max.',
-        rec: '🔥 Longest Palindromic Substring (LC5) is asked constantly. Know this approach cold.',
+        rec: 'Longest Palindromic Substring (LC5) is asked constantly. Know this approach cold.',
         code: `string longestPalin(string s){
   int st=0, maxLen=1;
   auto expand=[&](int l,int r){
@@ -447,7 +447,7 @@ return odd<=1;`},
         sit: 'Hash substrings for O(1) equality checks — Rabin-Karp rolling hash.',
         when: 'Repeated substring detection, longest duplicate substring, string matching.',
         how: 'Hash = Σ(s[i] * base^i) mod prime. Rolling: subtract left, shift, add right.',
-        rec: '✓ Know the concept. Rabin-Karp mentioned in system design and algorithm discussions.',
+        rec: 'Know the concept. Rabin-Karp mentioned in system design and algorithm discussions.',
         code: `// Polynomial rolling hash
 long long hashStr(string& s){
   long long h=0, base=31, mod=1e9+7, pow=1;
@@ -469,7 +469,7 @@ long long hashStr(string& s){
         sit: 'Visit all nodes — foundation of virtually all tree problems.',
         when: 'Inorder for sorted BST, preorder for serialize/copy, postorder for delete/height.',
         how: 'Inorder: L→root→R. Iterative uses explicit stack — interviewers specifically request this.',
-        rec: '🔥 Must know ITERATIVE traversal. Interviewers often say "no recursion" to test this.',
+        rec: 'Must know ITERATIVE traversal. Interviewers often say "no recursion" to test this.',
         code: `// Iterative Inorder
 stack<TreeNode*> st; TreeNode* cur=root;
 while(cur||!st.empty()){
@@ -485,7 +485,7 @@ while(cur||!st.empty()){
         sit: 'Process tree level by level — needed for height, right view, zigzag.',
         when: 'Height, right side view, zigzag, level averages, connect next pointers.',
         how: 'Queue-based BFS. Snapshot queue size at level start. Process all nodes at that level.',
-        rec: '🔥 Many tree problems reduce to level order. The "size snapshot" trick is essential.',
+        rec: 'Many tree problems reduce to level order. The "size snapshot" trick is essential.',
         code: `queue<TreeNode*> q; q.push(root);
 while(!q.empty()){
   int sz=q.size();          // snapshot level size
@@ -502,7 +502,7 @@ while(!q.empty()){
         sit: 'Lowest Common Ancestor — deepest node that is ancestor of both p and q.',
         when: 'LCA of binary tree, distance between nodes, path between two nodes.',
         how: 'Return node if null or equals p/q. If both children return non-null → LCA found.',
-        rec: '🔥 Top-5 tree problem. Know BST variant (O(log n) by value comparison) too.',
+        rec: 'Top-5 tree problem. Know BST variant (O(log n) by value comparison) too.',
         code: `TreeNode* lca(TreeNode* r,TreeNode* p,TreeNode* q){
   if(!r||r==p||r==q) return r;
   TreeNode* L=lca(r->left,p,q);
@@ -516,7 +516,7 @@ while(!q.empty()){
         sit: 'Validate BST using min/max bounds — most common BST interview question.',
         when: 'Validate BST, kth smallest (inorder count), floor/ceiling, BST from sorted array.',
         how: 'Pass valid range [min,max] to each node. Left narrows upper bound, right narrows lower.',
-        rec: '🔥 "Validate BST" asked constantly. Know kth smallest via inorder Morris traversal too.',
+        rec: '"Validate BST" asked constantly. Know kth smallest via inorder Morris traversal too.',
         code: `bool valid(TreeNode* r,long lo,long hi){
   if(!r) return true;
   if(r->val<=lo||r->val>=hi) return false;
@@ -537,7 +537,7 @@ void inorder(TreeNode* r,int& k,int& ans){
         sit: 'Longest path between any two nodes — may not pass through root.',
         when: 'Diameter of binary tree, binary tree maximum path sum (harder variant).',
         how: 'At each node: left_height + right_height = path through it. Update global max.',
-        rec: '⭐ Max Path Sum (LC124) is a hard variant asked at top companies. Know both.',
+        rec: 'Max Path Sum (LC124) is a hard variant asked at top companies. Know both.',
         code: `int dia=0;
 int height(TreeNode* r){
   if(!r) return 0;
@@ -558,7 +558,7 @@ int height(TreeNode* r){
         sit: 'Explore all reachable nodes, detect cycles, find connected components.',
         when: 'Number of islands, cycle detection, topo sort (DFS), path existence, SCC.',
         how: 'Mark visited. Recurse into unvisited neighbors. Post-order exit = topological order.',
-        rec: '🔥 Number of Islands is a top-5 graph problem worldwide. Know grid DFS cold.',
+        rec: 'Number of Islands is a top-5 graph problem worldwide. Know grid DFS cold.',
         code: `// Grid DFS (Number of Islands)
 void dfs(vector<vector<char>>&g,int i,int j){
   if(i<0||i>=(int)g.size()||
@@ -574,7 +574,7 @@ void dfs(vector<vector<char>>&g,int i,int j){
         sit: 'Shortest path in unweighted graph — level-order traversal on graph.',
         when: 'Shortest path, word ladder, 0-1 BFS, multi-source BFS (walls & gates).',
         how: 'Enqueue source. Dequeue, process, enqueue unvisited neighbors. Distance = level.',
-        rec: '🔥 Grid BFS (shortest path) asked at FAANG and Pakistani product companies. Know multi-source.',
+        rec: 'Grid BFS (shortest path) asked at FAANG and Pakistani product companies. Know multi-source.',
         code: `queue<int> q; vector<int> dist(n,INT_MAX);
 dist[src]=0; q.push(src);
 while(!q.empty()){
@@ -590,7 +590,7 @@ while(!q.empty()){
         sit: 'Shortest path in weighted non-negative graph.',
         when: 'GPS routing, cheapest flights within k stops, network delay time.',
         how: 'Min-heap. Always expand closest. Relax edges. Skip stale (outdated) entries.',
-        rec: '🔥 Must know. "Cheapest Flights Within K Stops" variant asks Dijkstra with constraint.',
+        rec: 'Must know. "Cheapest Flights Within K Stops" variant asks Dijkstra with constraint.',
         code: `priority_queue<pair<int,int>,
   vector<pair<int,int>>,greater<>> pq;
 vector<int> dist(n,INT_MAX);
@@ -609,7 +609,7 @@ while(!pq.empty()){
         sit: 'Order tasks with dependencies — only valid for DAGs.',
         when: 'Course prerequisites (LC207/210), build order, task scheduling, compilation.',
         how: "Kahn's BFS: process in-degree 0 nodes. DFS: push after all neighbors visited.",
-        rec: '🔥 Course Schedule is one of the most asked graph problems. Know cycle detection too.',
+        rec: 'Course Schedule is one of the most asked graph problems. Know cycle detection too.',
         code: `// Kahn's Algorithm (BFS)
 vector<int> indeg(n,0);
 for(auto[u,v]:edges) indeg[v]++;
@@ -627,7 +627,7 @@ while(!q.empty()){
         sit: 'Track connected components and merge sets in near-constant time.',
         when: 'Connected components, Kruskal MST, accounts merge, redundant connection.',
         how: 'parent[]+rank[]. Find with path compression. Union by rank.',
-        rec: '⭐ Cleanest solution for connected-components problems. Know path compression cold.',
+        rec: 'Cleanest solution for connected-components problems. Know path compression cold.',
         code: `vector<int> par(n),rnk(n,0);
 iota(par.begin(),par.end(),0);
 function<int(int)> find=[&](int x)->int{
@@ -651,7 +651,7 @@ auto unite=[&](int a,int b)->bool{
         sit: 'Cache overlapping subproblems — converts exponential to polynomial.',
         when: 'Top-down DP: Fibonacci, climbing stairs, grid paths, any repeated recursion.',
         how: 'Write naive recursion. Identify repeated states. Cache in map/array. Check before computing.',
-        rec: "🔥 Entry point to all DP. Master this before bottom-up. If you can't memoize, you can't do DP.",
+        rec: "Entry point to all DP. Master this before bottom-up. If you can't memoize, you can't do DP.",
         code: `// Fibonacci with memoization
 unordered_map<int,long long> memo;
 long long f(int n){
@@ -667,7 +667,7 @@ long long f(int n){
         sit: 'Max value under weight limit — each item at most once. Core DP template.',
         when: 'Subset sum, partition equal subset, target sum, 0/1 item selection.',
         how: 'Include or exclude each item. dp[w]=max(skip, val+dp[w-wt]). Reverse loop for 1D.',
-        rec: '🔥 Template for ALL DP problems. Subset Sum and Partition Equal Subset are direct variants.',
+        rec: 'Template for ALL DP problems. Subset Sum and Partition Equal Subset are direct variants.',
         code: `// Space-optimised 1D (iterate weight in reverse!)
 vector<int> dp(W+1,0);
 for(int i=0;i<n;i++)
@@ -682,7 +682,7 @@ for(int i=0;i<n;i++)
         sit: 'Longest Common Subsequence — characters need not be contiguous.',
         when: 'Diff tools, DNA matching, edit distance, shortest common supersequence.',
         how: 'Match: 1+diagonal. Mismatch: max(skip-row, skip-col). Build bottom-up table.',
-        rec: '🔥 Foundation of string DP. Edit Distance and SCS build directly on this.',
+        rec: 'Foundation of string DP. Edit Distance and SCS build directly on this.',,
         code: `vector<vector<int>> dp(n+1,vector<int>(m+1,0));
 for(int i=1;i<=n;i++)
   for(int j=1;j<=m;j++){
@@ -697,7 +697,7 @@ return dp[n][m];
         sit: 'Min coins to make amount; coins reusable — unbounded knapsack.',
         when: 'Minimum cost/steps with reusable choices. Count of ways variant too.',
         how: 'dp[a]=min over all coins of (1+dp[a-coin]). For count-ways: dp[a]+=dp[a-coin].',
-        rec: '🔥 Two variants: min count AND count of ways. Both are must-know. Very commonly asked.',
+        rec: 'Two variants: min count AND count of ways. Both are must-know. Very commonly asked.',
         code: `// Min coins
 vector<int> dp(amt+1,INT_MAX); dp[0]=0;
 for(int a=1;a<=amt;a++)
@@ -714,7 +714,7 @@ for(int c:coins)
         sit: 'Longest Increasing Subsequence — O(n log n) with patience sorting.',
         when: 'LIS length, Russian doll envelopes, minimum number of chains.',
         how: 'Maintain tails array. Binary search for position to insert/replace. tails.size()=LIS length.',
-        rec: '⭐ O(n log n) solution impresses. Russian Doll (sort by width, LIS on height) is a hard extension.',
+        rec: 'O(n log n) solution impresses. Russian Doll (sort by width, LIS on height) is a hard extension.',
         code: `vector<int> tails;
 for(int x:nums){
   auto it=lower_bound(tails.begin(),tails.end(),x);
@@ -735,7 +735,7 @@ return (int)tails.size();
         sit: 'Find k largest/smallest in O(n log k) without full sort.',
         when: 'Kth largest, top-k frequent, k closest points, stream median.',
         how: 'Min-heap of size k. If new element > heap top, pop and push. Heap = top-k largest.',
-        rec: '🔥 LC215 (Kth Largest) is extremely common. Know min-heap for largest, max-heap for smallest.',
+        rec: 'LC215 (Kth Largest) is extremely common. Know min-heap for largest, max-heap for smallest.',
         code: `// Kth Largest using min-heap of size k
 priority_queue<int,vector<int>,greater<int>> pq;
 for(int x:nums){
@@ -751,7 +751,7 @@ return pq.top();
         sit: 'Merge k sorted lists/arrays efficiently using a min-heap.',
         when: 'Merge k sorted lists, merge k sorted arrays, external sort.',
         how: 'Push first element of each list into min-heap with list index. Pop, push next from same list.',
-        rec: '🔥 Classic heap problem asked at Google, Microsoft, Uber. Know both heap and divide-and-conquer.',
+        rec: 'Classic heap problem asked at Google, Microsoft, Uber. Know both heap and divide-and-conquer.',
         code: `// Min-heap: {val, listIdx, elemIdx}
 using T=tuple<int,int,int>;
 priority_queue<T,vector<T>,greater<T>> pq;
@@ -770,7 +770,7 @@ while(!pq.empty()){
         sit: 'Find median of a running data stream in O(log n) per insert.',
         when: 'Running median, sliding window median (harder variant).',
         how: 'Two heaps: max-heap (lower half) and min-heap (upper half). Balance sizes. Median = tops.',
-        rec: '⭐ LC295. Elegant two-heap solution. Sliding window median is a hard extension.',
+        rec: 'LC295. Elegant two-heap solution. Sliding window median is a hard extension.',
         code: `priority_queue<int> lo;                      // max-heap
 priority_queue<int,vector<int>,greater<int>> hi; // min-heap
 void addNum(int n){
@@ -794,7 +794,7 @@ double getMedian(){
         sit: 'Generate all 2ⁿ subsets of a set — template for all backtracking.',
         when: 'Power set, sum subsets, target subsets, subsequences.',
         how: 'At each index: include or skip. Recurse. Add current state to result at each call.',
-        rec: '🔥 Core backtracking template. Understand this and permutations/combinations follow naturally.',
+        rec: 'Core backtracking template. Understand this and permutations/combinations follow naturally.',
         code: `vector<vector<int>> res;
 void bt(int start, vector<int>& curr, vector<int>& nums){
   res.push_back(curr);           // add at every node
@@ -810,7 +810,7 @@ void bt(int start, vector<int>& curr, vector<int>& nums){
         sit: 'Generate all n! arrangements — swap-based, no extra visited array.',
         when: 'All permutations, next permutation, permutation sequence (LC60).',
         how: 'Swap current index with each subsequent. Recurse. Swap back (backtrack).',
-        rec: '🔥 Direct interview question. Also know "next permutation" in-place algorithm.',
+        rec: 'Direct interview question. Also know "next permutation" in-place algorithm.',
         code: `void perm(vector<int>& a, int start){
   if(start==(int)a.size()){
     res.push_back(a); return;
@@ -831,7 +831,7 @@ void bt(int start, vector<int>& curr, vector<int>& nums){
         sit: 'Find all combinations summing to target — elements reusable.',
         when: 'Combination sum, coin change combos, factor combinations.',
         how: 'At each step: include current (reuse: pass same i) or skip to next (i+1).',
-        rec: '⭐ Classic. Extend with deduplication (sort + skip same adjacent) for Combo Sum II.',
+        rec: 'Classic. Extend with deduplication (sort + skip same adjacent) for Combo Sum II.',
         code: `void bt(int start, int remain, vector<int>& curr){
   if(remain==0){res.push_back(curr);return;}
   if(remain<0) return;
@@ -848,7 +848,7 @@ void bt(int start, vector<int>& curr, vector<int>& nums){
         sit: 'Constraint-satisfaction backtracking with aggressive pruning.',
         when: 'N-Queens, Sudoku solver, word search, crossword fill.',
         how: 'Place one element per row/cell. Check constraints. Backtrack on violation. Prune early.',
-        rec: '⭐ N-Queens is a classic backtracking showcase. Sudoku solver is asked at senior roles.',
+        rec: 'N-Queens is a classic backtracking showcase. Sudoku solver is asked at senior roles.',
         code: `// N-Queens
 vector<bool> col(n),diag1(2*n),diag2(2*n);
 void solve(int row){
@@ -872,7 +872,7 @@ void solve(int row){
         sit: 'Maximum non-overlapping intervals — greedy by earliest end time.',
         when: 'Non-overlapping intervals, meeting rooms, task scheduling, free time.',
         how: 'Sort by end time. Greedily pick if start >= last end. Classic exchange argument.',
-        rec: '🔥 LC435 Non-overlapping Intervals, Meeting Rooms II — asked everywhere.',
+        rec: 'LC435 Non-overlapping Intervals, Meeting Rooms II — asked everywhere.',
         code: `// Max non-overlapping intervals (sort by end)
 sort(intervals.begin(),intervals.end(),
   [](auto&a,auto&b){return a[1]<b[1];});
@@ -889,7 +889,7 @@ for(int i=1;i<n;i++){
         sit: 'Can you reach end? What is minimum jumps? Both are greedy.',
         when: 'Jump Game I (can reach), Jump Game II (min jumps).',
         how: 'Track farthest reachable. Greedily advance. For min jumps, track current level end.',
-        rec: '🔥 Two variants (reach + min jumps) both commonly asked. LC45 and LC55.',
+        rec: 'Two variants (reach + min jumps) both commonly asked. LC45 and LC55.',,
         code: `// Can reach end (LC55)
 int reach=0;
 for(int i=0;i<n;i++){
@@ -910,7 +910,7 @@ return jumps;`},
         sit: 'Merge all overlapping intervals into minimal set.',
         when: 'Merge intervals, insert interval, employee free time.',
         how: 'Sort by start. If curr start ≤ prev end, merge by taking max of ends.',
-        rec: '🔥 LC56. Very commonly asked as part of scheduling/calendar problems.',
+        rec: 'LC56. Very commonly asked as part of scheduling/calendar problems.',
         code: `sort(v.begin(),v.end());
 vector<vector<int>> res;
 for(auto& iv:v){
@@ -930,7 +930,7 @@ return res;`},
         sit: 'Prefix-based string lookup in O(L) — far faster than hash for prefix queries.',
         when: 'Autocomplete, word search, prefix count, longest word, IP routing.',
         how: 'Each node has children[26]. Mark isEnd. Insert: follow/create path. Search: follow path.',
-        rec: '🔥 Trie questions appear frequently at product companies. Know implement from scratch.',
+        rec: 'Trie questions appear frequently at product companies. Know implement from scratch.',
         code: `struct TrieNode{
   TrieNode* ch[26]={};
   bool end=false;
@@ -960,7 +960,7 @@ public:
         sit: 'Find all words from list in 2D grid — Trie prunes search efficiently.',
         when: 'Word search in board, multiple word matching, wildcard word match.',
         how: 'Build Trie from word list. DFS on board. Prune when prefix not in Trie. Mark found.',
-        rec: '⭐ Classic hard Trie+DFS combination. Asked at Google, Bytedance.',
+        rec: 'Classic hard Trie+DFS combination. Asked at Google, Bytedance.',
         code: `// Build trie from words, then DFS grid
 void dfs(vector<vector<char>>& b,
          TrieNode* node,int i,int j,string& word){
@@ -984,7 +984,7 @@ void dfs(vector<vector<char>>& b,
         sit: 'XOR cancels paired elements — find single/missing number in O(1) space.',
         when: 'Single number, missing number, two non-duplicate numbers, swap without temp.',
         how: 'a^a=0, a^0=a. XOR all → paired cancel, single remains.',
-        rec: '🔥 "Single Number" and "Missing Number" are must-knows. XOR is the O(1) space trick.',
+        rec: '"Single Number" and "Missing Number" are must-knows. XOR is the O(1) space trick.',
         code: `// Single Number (all others appear twice)
 int single=0;
 for(int x:nums) single^=x;
@@ -1002,7 +1002,7 @@ return miss;
         sit: 'Count set bits, check power of 2, extract/manipulate individual bits.',
         when: 'Hamming weight, single-bit checks, bit manipulation in DP states.',
         how: 'n&(n-1) removes lowest set bit. __builtin_popcount(n) counts all. n&(-n) isolates LSB.',
-        rec: '⭐ Bit tricks come up in number theory problems and bitmask DP.',
+        rec: 'Bit tricks come up in number theory problems and bitmask DP.',
         code: `// Count set bits (Kernighan)
 int count=0;
 while(n){ n&=(n-1); count++; }
@@ -1020,7 +1020,7 @@ dp[i]=dp[i>>1]+(i&1);`},
         sit: 'DP over subsets — traveling salesman, minimum cover, assignment problems.',
         when: 'TSP, minimum cost to visit all nodes, set cover, bitfield states in DP.',
         how: 'State = bitmask of visited. Transition: add next unvisited node.',
-        rec: '⭐ Asked at senior/competitive level. Good to know for ICPC background candidates.',
+        rec: 'Asked at senior/competitive level. Good to know for ICPC background candidates.',
         code: `// TSP-style: dp[mask][i] = min cost to visit
 // all nodes in mask, ending at i
 int dp[1<<n][n]; // initialize to INF
@@ -1041,7 +1041,7 @@ for(int mask=1;mask<(1<<n);mask++)
         sit: 'Euclidean GCD is foundation of all number theory — O(log n) and elegant.',
         when: 'GCD, LCM, simplify fractions, count coprime pairs, array divisibility.',
         how: 'gcd(a,b) = gcd(b, a%b). Recurse until b=0. LCM = a/gcd(a,b)*b.',
-        rec: '🔥 Asked at every company as number theory foundation. Know extended Euclidean too.',
+        rec: 'Asked at every company as number theory foundation. Know extended Euclidean too.',
         code: `int gcd(int a,int b){ return b?gcd(b,a%b):a; }
 int lcm(int a,int b){ return a/gcd(a,b)*b; } // div first to prevent overflow
 
@@ -1057,7 +1057,7 @@ int extGCD(int a,int b,int&x,int&y){
         sit: 'Find all primes up to n efficiently — O(n log log n) preprocessing.',
         when: 'Count primes, prime factorization, prime sum queries.',
         how: 'Mark all multiples of each prime as composite starting from p².',
-        rec: '⭐ "Count Primes" (LC204) is a standard question. Know the optimization starting at p².',
+        rec: '"Count Primes" (LC204) is a standard question. Know the optimization starting at p².',
         code: `vector<bool> sieve(int n){
   vector<bool> isPrime(n+1,true);
   isPrime[0]=isPrime[1]=false;
@@ -1073,7 +1073,7 @@ int extGCD(int a,int b,int&x,int&y){
         sit: 'Compute aⁿ mod m in O(log n) — essential for modular arithmetic.',
         when: 'Large exponents, matrix exponentiation for Fibonacci, modular inverse.',
         how: 'If n even: (a^(n/2))². If n odd: a*(a^(n-1)). Halve exponent each step.',
-        rec: '⭐ "Pow(x,n)" (LC50) is directly asked. Modular fast power used in cryptography questions.',
+        rec: '"Pow(x,n)" (LC50) is directly asked. Modular fast power used in cryptography questions.',
         code: `long long power(long long base,long long exp,long long mod){
   long long result=1;
   base%=mod;
@@ -1095,7 +1095,7 @@ int extGCD(int a,int b,int&x,int&y){
         sit: 'Maximum/minimum in every sliding window of size k in O(n).',
         when: 'Sliding window max, sliding window min, jump game variants.',
         how: 'Deque stores indices in decreasing order of values. Front = max. Remove stale indices from front.',
-        rec: '⭐ "Sliding Window Maximum" (LC239) is a classic. Harder than monotonic stack for many.',
+        rec: '"Sliding Window Maximum" (LC239) is a classic. Harder than monotonic stack for many.',
         code: `deque<int> dq; vector<int> res;
 for(int i=0;i<n;i++){
   // remove stale (out of window)
@@ -1113,7 +1113,7 @@ return res;`},
         sit: 'Design queue using fixed-size array — efficient use of circular indexing.',
         when: 'Design circular queue, implement queue with arrays, buffering.',
         how: 'front and rear pointers. (rear+1)%capacity for next position. Track size.',
-        rec: '✓ LC622. Common design question to test understanding of modular indexing.',
+        rec: 'LC622. Common design question to test understanding of modular indexing.',
         code: `class CircularQueue{
   vector<int> q; int front,rear,sz,cap;
 public:
@@ -1240,9 +1240,9 @@ const panel = document.getElementById('panel');
 function openPanel(algo, topic) {
   document.getElementById('ph-bc').textContent = topic.label + ' › Algorithm';
   document.getElementById('ph-title').textContent = algo.name;
-  let rc = 'rec-good', rl = '✓ GOOD TO KNOW';
-  if (algo.imp === 'must') { rc = 'rec-must'; rl = '🔥 MUST KNOW — Asked in almost every interview'; }
-  else if (algo.imp === 'high') { rc = 'rec-high'; rl = '⭐ HIGH PRIORITY — Very commonly tested'; }
+  let rc = 'rec-good', rl = 'GOOD TO KNOW';
+  if (algo.imp === 'must') { rc = 'rec-must'; rl = 'MUST KNOW — Asked in almost every interview'; }
+  else if (algo.imp === 'high') { rc = 'rec-high'; rl = 'HIGH PRIORITY — Very commonly tested'; }
   document.getElementById('ph-badges').innerHTML =
     `<span class="${rc}">${rl}</span>
      <span class="ph-badge" style="background:${topic.bg};border-color:${topic.border};color:${topic.color}">⏱ ${algo.time}</span>
