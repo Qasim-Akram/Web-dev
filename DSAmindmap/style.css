@@ -353,6 +353,22 @@
      font-weight: 400
  }
 
+ .title-with-icon {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+ }
+
+ .icon-box {
+     flex-shrink: 0;
+     animation: boxPulse 2s ease-in-out infinite;
+ }
+
+ @keyframes boxPulse {
+     0%, 100% { opacity: 1; }
+     50% { opacity: 0.8; }
+ }
+
  .tb-sep {
      width: 1px;
      height: 20px;
